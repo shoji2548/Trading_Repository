@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $symbol = strtoupper(trim($_POST['symbol']));
     $company_name = trim($_POST['company_name']);
 
-    // 🔹 ตรวจสอบว่าหุ้นนี้มีอยู่แล้วหรือไม่
+    // ตรวจสอบว่าหุ้นนี้มีอยู่แล้วหรือไม่
     $sql_check = "SELECT stockid FROM stock WHERE symbol = ?";
     $stmt = $conn->prepare($sql_check);
     $stmt->bind_param("s", $symbol);
