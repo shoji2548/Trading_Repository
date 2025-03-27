@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
 
-    // 🔹 ตรวจสอบว่า username มีอยู่แล้วหรือไม่
+    // ตรวจสอบว่า username มีอยู่แล้วหรือไม่
     $sql = "SELECT username FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $stmt->close();
 
-    // 🔹 เพิ่มข้อมูลลงในฐานข้อมูล
+    // เพิ่มข้อมูลลงในฐานข้อมูล
     $sql = "INSERT INTO users (username, password_hash, email, phone, firstname, lastname) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssss", $username, $password, $email, $phone, $firstname, $lastname);
