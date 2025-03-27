@@ -8,7 +8,7 @@ if (!isset($_SESSION['username'])) {
 
 $username = $_SESSION['username'];
 
-// ✅ ดึงข้อมูลพอร์ตทั้งหมดของผู้ใช้
+// ดึงข้อมูลพอร์ตทั้งหมดของผู้ใช้
 $sql = "SELECT portid, balance FROM portfolio WHERE username = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
@@ -29,7 +29,7 @@ if (empty($portfolios)) {
     exit();
 }
 
-// ✅ คำนวณ Net Profit/Loss รวมของทุกพอร์ต
+// คำนวณ Net Profit/Loss รวมของทุกพอร์ต
 $total_profit_loss = 0;
 foreach ($portfolios as $portfolio) {
     $sql = "SELECT SUM(profit_loss) AS profit_loss FROM stock_lot WHERE portid = ?";
@@ -43,7 +43,7 @@ foreach ($portfolios as $portfolio) {
     $total_profit_loss += $profit_data['profit_loss'] ?? 0;
 }
 
-// ✅ คำนวณ Win Rate รวมของทุกพอร์ต
+// คำนวณ Win Rate รวมของทุกพอร์ต
 $trade_styles = ['swing_trade', 'day_trade', 'run_trend'];
 $win_rates = [];
 $trade_counts = [];
@@ -56,7 +56,7 @@ foreach ($trade_styles as $style) {
     $win_count = 0;
 
     foreach ($portfolios as $portfolio) {
-        // 🔹 ดึงจำนวนไม้ที่ปิดแล้วของ Trade Style นี้
+        // ดึงจำนวนไม้ที่ปิดแล้วของ Trade Style นี้
         $sql = "SELECT COUNT(*) AS total_trades FROM stock_lot WHERE portid = ? AND trade_style = ? AND status = 'CLOSED'";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $portfolio['portid'], $style);
@@ -67,7 +67,7 @@ foreach ($trade_styles as $style) {
 
         $total_trade_count += $trade_data['total_trades'] ?? 0;
 
-        // 🔹 นับจำนวนไม้ที่มีกำไร (`profit_loss > 0`) = ชนะ
+        // นับจำนวนไม้ที่มีกำไร (`profit_loss > 0`) = ชนะ
         $sql = "SELECT COUNT(*) AS win_trades FROM stock_lot WHERE portid = ? AND trade_style = ? AND status = 'CLOSED' AND profit_loss > 0";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $portfolio['portid'], $style);
@@ -81,7 +81,7 @@ foreach ($trade_styles as $style) {
 
     $lose_count = $total_trade_count - $win_count;
 
-    // 🔹 คำนวณ Win Rate
+    // คำนวณ Win Rate
     $win_rate = ($total_trade_count > 0) ? ($win_count / $total_trade_count) * 100 : 0;
     $win_rates[$style] = round($win_rate, 2);
     $trade_counts[$style] = [
@@ -96,7 +96,7 @@ foreach ($trade_styles as $style) {
     $total_trades += $total_trade_count;
 }
 
-// ✅ คำนวณ Win Rate รวม
+// คำนวณ Win Rate รวม
 $total_win_rate = ($total_trades > 0) ? ($total_wins / $total_trades) * 100 : 0;
 $total_win_rate = round($total_win_rate, 2);
 
