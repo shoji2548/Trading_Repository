@@ -9,7 +9,7 @@ if (!isset($_GET['portid'])) {
 $portid = $_GET['portid'];
 $username = $_SESSION['username'];
 
-// 🔹 ดึงข้อมูลพอร์ต
+// ดึงข้อมูลพอร์ต
 $sql = "SELECT p.portid, b.broker_name, p.balance 
         FROM portfolio p
         JOIN broker b ON p.brokerid = b.brokerid
