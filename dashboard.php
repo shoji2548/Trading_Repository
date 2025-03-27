@@ -181,7 +181,7 @@ $stmt->close();
         $start_date = $_GET['start_date'];
         $end_date = $_GET['end_date'];
 
-        // ✅ ดึง Net Profit/Loss เฉพาะหุ้นที่ปิดการขายในช่วงวันที่กำหนด
+        // ดึง Net Profit/Loss เฉพาะหุ้นที่ปิดการขายในช่วงวันที่กำหนด
         $sql = "SELECT SUM(profit_loss) AS net_profit_loss 
                 FROM stock_lot 
                 WHERE portid IN (SELECT portid FROM portfolio WHERE username = ?) 
