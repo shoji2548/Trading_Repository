@@ -10,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // ✅ ตรวจสอบว่าธนาคารมีอยู่แล้วหรือไม่
     $sql = "SELECT bankid FROM bank WHERE bank_name = ? OR bank_shortname = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $bank_name, $bank_shortname);
@@ -24,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $stmt->close();
 
-    // ✅ เพิ่มธนาคารใหม่
     $sql = "INSERT INTO bank (bank_name, bank_shortname) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $bank_name, $bank_shortname);
