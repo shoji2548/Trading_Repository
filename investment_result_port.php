@@ -44,7 +44,7 @@ $total_loses = 0;
 $total_trades = 0;
 
 foreach ($trade_styles as $style) {
-    // 🔹 ดึงจำนวนไม้ที่ปิดแล้วของ Trade Style นี้
+    // ดึงจำนวนไม้ที่ปิดแล้วของ Trade Style นี้
     $sql = "SELECT COUNT(*) AS total_trades FROM stock_lot WHERE portid = ? AND trade_style = ? AND status = 'CLOSED'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $portid, $style);
@@ -55,7 +55,7 @@ foreach ($trade_styles as $style) {
 
     $total_trade_count = $trade_data['total_trades'] ?? 0;
 
-    // 🔹 นับจำนวนไม้ที่กำไร (`profit_loss > 0`) = ชนะ
+    // นับจำนวนไม้ที่กำไร (`profit_loss > 0`) = ชนะ
     $sql = "SELECT COUNT(*) AS win_trades FROM stock_lot WHERE portid = ? AND trade_style = ? AND status = 'CLOSED' AND profit_loss > 0";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $portid, $style);
@@ -67,7 +67,7 @@ foreach ($trade_styles as $style) {
     $win_count = $win_data['win_trades'] ?? 0;
     $lose_count = $total_trade_count - $win_count;
 
-    // 🔹 คำนวณ Win Rate
+    // คำนวณ Win Rate
     $win_rate = ($total_trade_count > 0) ? ($win_count / $total_trade_count) * 100 : 0;
     $win_rates[$style] = round($win_rate, 2);
     $trade_counts[$style] = [
