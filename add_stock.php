@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $stmt->close();
 
-        // 🔹 เพิ่มหุ้นใหม่เข้าสู่ระบบ
+        // เพิ่มหุ้นใหม่เข้าสู่ระบบ
         $sql_insert = "INSERT INTO stock (symbol, company_name) VALUES (?, ?)";
         $stmt = $conn->prepare($sql_insert);
         $stmt->bind_param("ss", $symbol, $company_name);
