@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // ✅ ตรวจสอบว่าตาราง broker มีอยู่หรือไม่
+    // ตรวจสอบว่าตาราง broker มีอยู่หรือไม่
     $sql_check_table = "SHOW TABLES LIKE 'broker'";
     $result = $conn->query($sql_check_table);
 
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // ✅ ตรวจสอบว่าโบรกเกอร์มีอยู่แล้วหรือไม่
+    // ตรวจสอบว่าโบรกเกอร์มีอยู่แล้วหรือไม่
     $sql = "SELECT brokerid FROM broker WHERE broker_name = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $broker_name);
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $stmt->close();
 
-    // ✅ เพิ่มโบรกเกอร์ใหม่
+    // เพิ่มโบรกเกอร์ใหม่
     $sql = "INSERT INTO broker (broker_name) VALUES (?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $broker_name);
