@@ -90,7 +90,7 @@ foreach ($trade_styles as $style) {
         "lose" => $lose_count
     ];
 
-    // 🔹 รวมค่าคำนวณ Win Rate รวม
+    // รวมค่าคำนวณ Win Rate รวม
     $total_wins += $win_count;
     $total_loses += $lose_count;
     $total_trades += $total_trade_count;
