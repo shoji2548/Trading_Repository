@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $account_number = $_POST['account_number'];
     $balance = $_POST['balance'];
 
-    // 🔹 ตรวจสอบว่า Broker ID มีอยู่จริงหรือไม่
+    // ตรวจสอบว่า Broker ID มีอยู่จริงหรือไม่
     $sql_check_broker = "SELECT brokerid FROM broker WHERE brokerid = ?";
     $stmt_broker = $conn->prepare($sql_check_broker);
     $stmt_broker->bind_param("i", $brokerid);
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $stmt_broker->close();
 
-    // 🔹 ตรวจสอบว่า Account Number มีอยู่จริงหรือไม่
+    // ตรวจสอบว่า Account Number มีอยู่จริงหรือไม่
     $sql_check_account = "SELECT account_number FROM bank_account WHERE account_number = ?";
     $stmt_account = $conn->prepare($sql_check_account);
     $stmt_account->bind_param("s", $account_number);
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $stmt_account->close();
 
-    // 🔹 เพิ่มพอร์ตลงทุนเมื่อข้อมูลถูกต้อง
+    // เพิ่มพอร์ตลงทุนเมื่อข้อมูลถูกต้อง
     $sql = "INSERT INTO portfolio (portid, username, brokerid, account_number, balance) 
             VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
