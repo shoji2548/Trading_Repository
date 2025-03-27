@@ -19,7 +19,7 @@ if (!$portid || !$symbol || !$trade_style || !$quantity || !$price || !$transact
     exit();
 }
 
-// ✅ ดึง stockid จาก symbol
+// ดึง stockid จาก symbol
 $sql = "SELECT stockid FROM stock WHERE symbol = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $symbol);
@@ -34,7 +34,7 @@ if (!$stock) {
 }
 $stockid = $stock['stockid'];
 
-// ✅ เช็คว่ามีพอร์ตหรือไม่
+// เช็คว่ามีพอร์ตหรือไม่
 $sql = "SELECT balance FROM portfolio WHERE portid = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $portid);
