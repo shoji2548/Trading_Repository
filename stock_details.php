@@ -9,7 +9,7 @@ if (!isset($_GET['portid']) || !isset($_GET['symbol'])) {
 $portid = $_GET['portid'];
 $symbol = $_GET['symbol'];
 
-// ✅ ดึงข้อมูลบริษัทจากตาราง `stock`
+// ดึงข้อมูลบริษัทจากตาราง `stock`
 $sql = "SELECT stockid, company_name FROM stock WHERE symbol = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $symbol);
@@ -26,7 +26,7 @@ if (!$stock) {
 $stockid = $stock['stockid'];
 $company_name = $stock['company_name'];
 
-// ✅ นับจำนวนไม้ที่เทรดไปทั้งหมด และดึงข้อมูลที่เกี่ยวข้อง
+// นับจำนวนไม้ที่เทรดไปทั้งหมด และดึงข้อมูลที่เกี่ยวข้อง
 $sql = "SELECT COUNT(*) AS total_trades, 
                SUM(CASE WHEN profit_loss > 0 THEN 1 ELSE 0 END) AS win_trades, 
                SUM(CASE WHEN profit_loss < 0 THEN 1 ELSE 0 END) AS lose_trades, 
