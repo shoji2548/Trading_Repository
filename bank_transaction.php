@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $account_number = $_POST['account_number'];
     $amount = $_POST['amount'];
 
-    // 🔹 ตรวจสอบว่า Port ID มีอยู่จริงหรือไม่
+    // ตรวจสอบว่า Port ID มีอยู่จริงหรือไม่
     $sql_check_port = "SELECT portid FROM portfolio WHERE portid = ?";
     $stmt_port = $conn->prepare($sql_check_port);
     $stmt_port->bind_param("s", $portid);
@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $stmt_port->close();
 
-    // 🔹 ตรวจสอบว่า Account Number มีอยู่จริงหรือไม่
+    // ตรวจสอบว่า Account Number มีอยู่จริงหรือไม่
     $sql_check_account = "SELECT account_number FROM bank_account WHERE account_number = ?";
     $stmt_account = $conn->prepare($sql_check_account);
     $stmt_account->bind_param("s", $account_number);
@@ -32,14 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $stmt_account->close();
 
-    // 🔹 ทำธุรกรรมฝากเงินเข้า Port
+    // ทำธุรกรรมฝากเงินเข้า Port
     $sql = "INSERT INTO bank_transaction (portid, account_number, transaction_type, amount, transaction_date) 
             VALUES (?, ?, 'DEPOSIT', ?, CURRENT_DATE)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssd", $portid, $account_number, $amount);
 
     if ($stmt->execute()) {
-        // 🔹 อัปเดตยอดเงินใน Portfolio
+        // อัปเดตยอดเงินใน Portfolio
         $sql_update_balance = "UPDATE portfolio SET balance = balance + ? WHERE portid = ?";
         $stmt_update = $conn->prepare($sql_update_balance);
         $stmt_update->bind_param("ds", $amount, $portid);
