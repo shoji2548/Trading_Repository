@@ -8,7 +8,7 @@ if (!isset($_GET['portid'])) {
 
 $portid = $_GET['portid'];
 
-// ✅ ดึงข้อมูล Balance จาก Portfolio
+// ดึงข้อมูล Balance จาก Portfolio
 $sql = "SELECT balance FROM portfolio WHERE portid = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $portid);
@@ -24,7 +24,7 @@ if (!$portfolio) {
 
 $balance = $portfolio['balance'];
 
-// ✅ คำนวณ Net Profit/Loss จาก stock_lot
+// คำนวณ Net Profit/Loss จาก stock_lot
 $sql = "SELECT SUM(profit_loss) AS total_profit_loss FROM stock_lot WHERE portid = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $portid);
@@ -35,7 +35,7 @@ $stmt->close();
 
 $total_profit_loss = $profit_data['total_profit_loss'] ?? 0;
 
-// ✅ คำนวณ Win Rate แยกตาม Trade Style
+// คำนวณ Win Rate แยกตาม Trade Style
 $trade_styles = ['swing_trade', 'day_trade', 'run_trend'];
 $win_rates = [];
 $trade_counts = [];
@@ -82,7 +82,7 @@ foreach ($trade_styles as $style) {
     $total_trades += $total_trade_count;
 }
 
-// ✅ คำนวณ Win Rate รวม
+// คำนวณ Win Rate รวม
 $total_win_rate = ($total_trades > 0) ? ($total_wins / $total_trades) * 100 : 0;
 $total_win_rate = round($total_win_rate, 2);
 
